@@ -1,0 +1,42 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+      <form [formGroup]="singnupForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input type="text" id="username" formControlName="username" class="form-control">
+          <span *ngIf="!singnupForm.get('username').valid && singnupForm.get('username').touched"
+            class="help-block">Please enter a valid username
+            <span *ngIf="singnupForm.get('username').errors['forbidden']" class="help-block">Your username is
+              Invalid<span *ngIf="singnupForm.get('username').errors['required']" class="help-block">This file
+                is Required</span></span></span>
+        </div>
+        <div class="form-group">
+          <label for="email">email</label>
+          <input type="text" id="email" formControlName="email" class="form-control">
+          <span *ngIf="!singnupForm.get('email').valid && singnupForm.get('email').touched" class="help-block">Please
+            enter a valid
+            Email</span>
+        </div>
+        <div class="radio" *ngFor="let gender of genders">
+          <label>
+            <input type="radio" [value]="gender" formControlName="gender">{{ gender }}
+          </label>
+        </div>
+        <div formArrayName="hobbies">
+          <h4>Your Hobbies</h4>
+          <button class="btn btn-primary" type="button" (click)="onAddHobbies()">Add Hobby</button>
+          <div class="form-group" *ngFor="let hobbyControl of getControls(); let i = index">
+            <input type="text" class="form-control" [formControlName]="i">
+          </div>
+          <div>
+            <span class="help-block" *ngIf="!singnupForm.valid && singnupForm.touched">Please enter your
+              Data!</span>
+          </div>
+        </div>
+        <button class="btn btn-primary" type="submit" [disabled]="!singnupForm.valid"
+          style="cursor: pointer;">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>
